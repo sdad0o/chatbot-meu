@@ -377,4 +377,4 @@ def chat():
 if __name__ == "__main__":
     print("Running locally")
     initialize_knowledge_base()
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=4000)
