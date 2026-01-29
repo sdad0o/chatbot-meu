@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEU Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <div class="logo-area">
+                <div class="avatar-bot">MEU</div>
+                <div>
+                    <h1>MEU Assistant</h1>
+                    <span class="status">Online • Middle East University</span>
+                </div>
+            </div>
+        </header>
+        
+        <div id="messages" class="messages-area">
+            <div class="message bot">
+                <div class="message-content">
+                    Hello! I'm the Middle East University Assistant. How can I help you today?
+                    <br><br>
+                    You can ask me about:
+                    <ul>
+                        <li>Admission Requirements</li>
+                        <li>Programs and Fees</li>
+                        <li>University President</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <form id="chatForm" autocomplete="off">
+                <input type="text" id="userInput" placeholder="Type your question here..." required>
+                <button type="submit" id="sendBtn">
+                    <i data-lucide="send"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

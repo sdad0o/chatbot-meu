@@ -1,0 +1,52 @@
+﻿git : remote: error: GH013: Repository rule 
+violations found for refs/heads/main.        
+At line:1 char:1
++ git push -u origin main 2>&1 | Out-File 
+-Encoding utf8 push_log.txt
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (remot 
+   e: error: ...s/main.        :String) [], Remot  
+  eException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+remote: 
+remote: - GITHUB PUSH PROTECTION        
+remote:   ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ
+¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ
+¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤        
+remote:     Resolve the following violations 
+before pushing again        
+remote: 
+remote:     - Push cannot contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn how to resolve a blocked 
+push        
+remote:      https://docs.github.com/code-security/
+secret-scanning/working-with-secret-scanning-and-pu
+sh-protection/working-with-push-protection-from-the
+-command-line#resolving-a-blocked-push        
+remote:             
+remote:             
+remote:       ظ¤ظ¤ OpenAI API Key ظ¤ظ¤ظ¤ظ¤ظ¤
+ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤
+ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤ظ¤        
+remote:        locations:        
+remote:          - commit: 
+ff6abd0767abc97fdac9afa639bc7714e7b47c28        
+remote:            path: .env:1        
+remote:             
+remote:        (?) To push, remove secret from 
+commit(s) or follow this URL to allow the secret.  
+      
+remote:        https://github.com/sdad0o/chatbot-me
+u/security/secret-scanning/unblock-secret/38vV5JgnM
+pFIuVBClcWxOke9Ftw        
+remote:             
+remote: 
+remote: 
+To https://github.com/sdad0o/chatbot-meu.git
+ ! [remote rejected] main -> main (push declined 
+due to repository rule violations)
+error: failed to push some refs to 
+'https://github.com/sdad0o/chatbot-meu.git'
