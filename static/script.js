@@ -3,6 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('userInput');
     const messagesDiv = document.getElementById('messages');
     const sendBtn = document.getElementById('sendBtn');
+    const suggestionChips = document.querySelectorAll('.suggestion-chip');
+
+    // Suggestion Chips
+    suggestionChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            const text = chip.textContent;
+            input.value = text;
+            form.dispatchEvent(new Event('submit'));
+        });
+    });
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();

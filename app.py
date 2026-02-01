@@ -236,6 +236,10 @@ def load_data():
             full_list = ", ".join(diploma_names)
             CHUNKS.append(f"List of all Diploma Programs (تخصصات الدبلوم المتاحة): {full_list}")
 
+    # 8. Developer Info (Hardcoded)
+    dev_info = "تم تطويري من قبل دائرة تكنولوجيا المعلومات في جامعة الشرق الاوسط. I was developed by the IT Department at Middle East University."
+    CHUNKS.append(f"Question: Who made you? Who developed you? من صنعك؟ Answer: {dev_info}")
+
     print(f"Data loaded. {len(CHUNKS)} chunks created.")
 
 def initialize_knowledge_base():

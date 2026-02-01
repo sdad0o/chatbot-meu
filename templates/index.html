@@ -1,38 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEU Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MEU chatBot</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <div class="chat-container">
         <header class="chat-header">
             <div class="logo-area">
                 <div class="avatar-bot">MEU</div>
                 <div>
-                    <h1>MEU Assistant</h1>
+                    <h1>MEU chatBot</h1>
                     <span class="status">Online • Middle East University</span>
                 </div>
             </div>
         </header>
-        
+
         <div id="messages" class="messages-area">
             <div class="message bot">
                 <div class="message-content">
-                    Hello! I'm the Middle East University Assistant. How can I help you today?
+                    Hello! I'm the Middle East University chatBot. How can I help you today?
                     <br><br>
                     You can ask me about:
                     <ul>
                         <li>Admission Requirements</li>
                         <li>Programs and Fees</li>
-                        <li>University President</li>
+                        <li>Avilable Programs</li>
                     </ul>
                 </div>
             </div>
+        </div>
+
+        <div class="suggestions-area">
+            <button class="suggestion-chip">ما تخصصات البكالوريوس</button>
+            <button class="suggestion-chip">ما تخصصات الدبلوم المتوسط</button>
+            <button class="suggestion-chip">ما تخصصات الماجستير</button>
         </div>
 
         <div class="input-area">
@@ -42,6 +51,9 @@
                     <i data-lucide="send"></i>
                 </button>
             </form>
+            <div class="disclaimer-text">
+                This is an AI tool and could make mistakes. هذه أداة ذكاء اصطناعي وقد تخطئ.
+            </div>
         </div>
     </div>
     <script src="/static/script.js"></script>
@@ -49,4 +61,5 @@
         lucide.createIcons();
     </script>
 </body>
+
 </html>
