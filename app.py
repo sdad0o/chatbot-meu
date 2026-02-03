@@ -97,8 +97,12 @@ def load_data():
     if "uk_degrees" in data:
         uk = data["uk_degrees"]
         progs = ", ".join(uk.get("programs", []))
-        # keywords: international, uk, programs, برامج, دولية, بريطانية
-        CHUNKS.append(f"International Programs / UK Degrees / Hosted Programs (البرامج الدولية): {progs}. {uk.get('description', '')}")
+        desc = uk.get("description", "")
+        # Use Q&A format to help the LLM understand this is the answer
+        CHUNKS.append(
+            f"Question: What are the International Programs? British Degrees? (البرامج الدولية / البرامج البريطانية). "
+            f"Answer: {desc} Programs include: {progs}."
+        )
 
     # 5. Bachelor Programs (The bulk of the data)
     bachelor_names = []
@@ -144,6 +148,10 @@ def load_data():
                 f"Additional Fees (رسوم إضافية): {fees_text}. "
                 f"Admission Requirements (شروط القبول): {reqs}"
             )
+
+            if "required_documents" in prog:
+                chunk += f" Required Documents (الوثائق المطلوبة): {prog['required_documents']}"
+            
             CHUNKS.append(chunk)
 
         # Create Faculty Summary Chunks
@@ -194,6 +202,10 @@ def load_data():
                 f"Additional Fees (رسوم إضافية): {fees_text}. "
                 f"Admission Requirements (شروط القبول): {reqs}"
             )
+
+            if "required_documents" in prog:
+                chunk += f" Required Documents (الوثائق المطلوبة): {prog['required_documents']}"
+            
             CHUNKS.append(chunk)
 
         # Add Master Summary Chunk
@@ -229,6 +241,10 @@ def load_data():
                 f"Additional Fees (رسوم إضافية): {fees_text}. "
                 f"Admission Requirements (شروط القبول): {reqs}"
             )
+
+            if "required_documents" in prog:
+                chunk += f" Required Documents (الوثائق المطلوبة): {prog['required_documents']}"
+            
             CHUNKS.append(chunk)
             
         # Add Diploma Summary Chunk
@@ -236,7 +252,14 @@ def load_data():
             full_list = ", ".join(diploma_names)
             CHUNKS.append(f"List of all Diploma Programs (تخصصات الدبلوم المتاحة): {full_list}")
 
-    # 8. Developer Info (Hardcoded)
+    # 8. Specific Contact Questions
+    # Admission and Registration
+    CHUNKS.append("Question: كيف يمكنني التواصل مع القبول و التسجيل؟ Answer: يمكنك التواصل مع القبول و التسجيل من خلال الرقم +962 79 712 2000")
+    
+    # Finance Department
+    CHUNKS.append("Question: كيف يمكنني التواصل مع المالية؟ كيف يمكنني التواصل مع الدائرة المالية؟ Answer: يمكنك التواصل من خلال الرقم التالي +962 6 4790222")
+
+    # 9. Developer Info (Hardcoded)
     dev_info = "تم تطويري من قبل دائرة تكنولوجيا المعلومات في جامعة الشرق الاوسط. I was developed by the IT Department at Middle East University."
     CHUNKS.append(f"Question: Who made you? Who developed you? من صنعك؟ Answer: {dev_info}")
 
@@ -357,7 +380,12 @@ def chat():
     system_prompt = (
         "You are a helpful assistant for Middle East University (MEU) in Jordan. "
         "Use the following context to answer the user's question. "
-        "If the answer is not in the context, say you don't have that information. "
+        "If the answer is not in the context, you MUST answer EXACTLY with the following Arabic text:\n"
+        "\"للحصول على المعلومة المطلوبة يمكنك التواصل مع الجامعة من خلال الارقام التالية \n"
+        "+962 6 4790222\n"
+        "+962 79 712 2000\n"
+        "او عبر الواتس اب \n"
+        "+962 79 712 2000\"\n"
         "Be concise and verified.\n\n"
         f"--- Context ---\n{context_text}\n----------------"
     )

@@ -252,6 +252,35 @@ class MEUEbookletScraper:
             except Exception as e:
                 # print(f"Error extracting requirements: {e}")
                 pass
+
+            # Get Required Documents (الوثائق المطلوبة)
+            try:
+                # Logic: Find header containing "الوثائق المطلوبة" and get content
+                docs_content = self.driver.execute_script("""
+                    var content = '';
+                    var headers = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, div, span, p'));
+                    var targetHeader = headers.find(el => el.innerText.includes('الوثائق المطلوبة') && el.innerText.length < 50);
+                    
+                    if (targetHeader) {
+                        // Try to find the next container or list
+                        var next = targetHeader.nextElementSibling;
+                        if (next) {
+                            content = next.innerText;
+                        } else {
+                            // Sometimes it's in a parent's sibling
+                            var parent = targetHeader.parentElement;
+                            if (parent && parent.nextElementSibling) {
+                                content = parent.nextElementSibling.innerText;
+                            }
+                        }
+                    }
+                    return content;
+                """)
+                
+                if docs_content and len(docs_content.strip()) > 5:
+                     program_data["required_documents"] = docs_content.strip()
+            except Exception as e:
+                pass
             
             # Get credit hour price (سعر الساعة المعتمدة)
             try:

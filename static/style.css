@@ -213,6 +213,7 @@ body::after {
 .suggestions-area {
     padding: 12px 24px;
     display: flex;
+    justify-content: center;
     gap: 10px;
     overflow-x: auto;
     white-space: nowrap;
@@ -385,4 +386,13 @@ body::after {
     margin-top: 8px;
     font-weight: 500;
     opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+    .chat-container {
+        max-width: 900px;
+        /* Larger width for PC */
+        height: 92vh;
+        max-height: 900px;
+    }
 }
