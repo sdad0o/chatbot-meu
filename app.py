@@ -259,6 +259,46 @@ def load_data():
     # Finance Department
     CHUNKS.append("Question: كيف يمكنني التواصل مع المالية؟ كيف يمكنني التواصل مع الدائرة المالية؟ Answer: يمكنك التواصل من خلال الرقم التالي +962 6 4790222")
 
+    # University Facilities
+    facilities_answer = (
+        "مرافق الجامعة :\n"
+        "الملعب الأولمبي\n"
+        "صالة اللياقة البدنية\n"
+        "الملاعب الرياضية الخارجية\n"
+        "الملاعب الرياضية الداخلية\n"
+        "نكست ليفل\n"
+        "مواقف السيارات\n"
+        "المواصلات\n"
+        "أماكن العبادة\n"
+        "خدمات الطعام والشراب\n"
+        "خدمات الإنترنت\n"
+        "الخدمات البنكية\n"
+        "خدمات ذوي الإحتياجات الخاصة\n"
+        "الخدمات الطبية والتأمين الصحي\n"
+        "مركز جامعة الشرق الأوسط للعلاج الحكمي"
+    )
+    CHUNKS.append(f"Question: ما مرافق الجامعة؟ مرافق الجامعه؟ Answer: {facilities_answer}")
+
+    # Recreational Facilities
+    recreational_answer = (
+        "المرافق الترفيهية :\n"
+        "نكست ليفل\n"
+        "الملعب الأولمبي\n"
+        "صالة اللياقة البدنية\n"
+        "الملاعب الرياضية الخارجية\n"
+        "الملاعب الرياضية الداخلية\n"
+        "خدمات الطعام والشراب"
+    )
+    CHUNKS.append(f"Question: ما المرافق الترفيهية؟ ما المرافق الترفيهيه؟ Answer: {recreational_answer}")
+
+    # Health Facilities
+    health_answer = (
+        "المرافق الصحية :\n"
+        "الخدمات الطبية والتأمين الصحي\n"
+        "مركز جامعة الشرق الأوسط للعلاج الحكمي "
+    )
+    CHUNKS.append(f"Question: ما المرافق الصحية؟ ما المرافق الصحيه؟ Answer: {health_answer}")
+
     # 9. Developer Info (Hardcoded)
     dev_info = "تم تطويري من قبل دائرة تكنولوجيا المعلومات في جامعة الشرق الاوسط. I was developed by the IT Department at Middle East University."
     CHUNKS.append(f"Question: Who made you? Who developed you? من صنعك؟ Answer: {dev_info}")
