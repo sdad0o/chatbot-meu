@@ -13,6 +13,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(BASE_DIR, "scrap website data", "meu_data.json")
 CHUNKS = []
+CONVERSATION_HISTORY = {}
 
 def load_data():
     """Loads JSON and creates text chunks for retrieval."""
@@ -396,15 +397,57 @@ def send_static(path):
 @app.route("/api/chat", methods=["POST"])
 def chat():
     user_message = request.json.get("message", "")
+    session_id = request.json.get("session_id", request.remote_addr) # Use IP as fallback session ID
+
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
 
-    # Retrieve context
-    context_chunks = retrieve_context(user_message)
+    # Content Moderation - Custom Arabic/English bad words filter
+    OFFENSIVE_WORDS = [
+        # Arabic offensive words (common insults)
+        "كس", "طيز", "زب", "شرموط", "عرص", "منيوك", "قحبة", "كلب", "حمار", "غبي",
+        "احمق", "تافه", "حقير", "وسخ", "زبال", "ابن الكلب", "يلعن", "اللعنة",
+        "خرا", "زق", "انيك", "نيك", "متناك", "عاهرة", "فاجرة", "ملعون",
+        # English offensive words
+        "fuck", "shit", "bitch", "ass", "damn", "bastard", "idiot", "stupid",
+        "dumb", "moron", "retard", "crap", "dick", "pussy", "whore", "slut"
+    ]
     
-    # Always include top level admin info if no specific match found, 
-    # OR if the score is low? For now, let's just use what we found.
-    # But if empty, we MUST provide something or the bot fails.
+    # Check for offensive words (case-insensitive)
+    message_lower = user_message.lower()
+    for word in OFFENSIVE_WORDS:
+        if word in message_lower:
+            print(f"[MODERATION-LOCAL] Blocked word '{word}' from {session_id}: {user_message}")
+            return jsonify({
+                "response": "⛔ هذه الرسالة غير مقبولة ومخالفة لسياسة الاستخدام.\n\nيُرجى الالتزام بأسلوب محترم عند التواصل مع المساعد الآلي للجامعة.\n\n⚠️ ملاحظة: يتم تسجيل جميع المحادثات.\n\n---\n⛔ This message is unacceptable and violates our usage policy.\n\nPlease use respectful language when communicating with the university assistant.\n\n⚠️ Note: All conversations are logged."
+            })
+
+    # Content Moderation - OpenAI API (for additional coverage)
+    try:
+        moderation_response = client.moderations.create(input=user_message)
+        if moderation_response.results[0].flagged:
+            # Log the flagged content for review (optional)
+            print(f"[MODERATION-API] Flagged message from {session_id}: {user_message}")
+            return jsonify({
+                "response": "⛔ هذه الرسالة غير مقبولة ومخالفة لسياسة الاستخدام.\n\nيُرجى الالتزام بأسلوب محترم عند التواصل مع المساعد الآلي للجامعة.\n\n⚠️ ملاحظة: يتم تسجيل جميع المحادثات.\n\n---\n⛔ This message is unacceptable and violates our usage policy.\n\nPlease use respectful language when communicating with the university assistant.\n\n⚠️ Note: All conversations are logged."
+            })
+    except Exception as e:
+        print(f"Moderation API error: {e}")
+        # Continue without moderation if API fails (fallback)
+
+    # Manage Conversation History
+    if session_id not in CONVERSATION_HISTORY:
+        CONVERSATION_HISTORY[session_id] = []
+    
+    # Append user message
+    CONVERSATION_HISTORY[session_id].append({"role": "user", "content": user_message})
+    
+    # Keep only last 6 messages (3 turns)
+    CONVERSATION_HISTORY[session_id] = CONVERSATION_HISTORY[session_id][-6:]
+
+    # Retrieve context based on the LATEST message
+    # (Optional: specialized retrieval using summarized history, but simple query is usually fine for now)
+    context_chunks = retrieve_context(user_message)
     
     if not context_chunks:
         # Fallback: Provide general info about valid topics so GPT can at least say "I can answer X, Y, Z"
@@ -417,17 +460,28 @@ def chat():
     else:
         context_text = "\n\n".join(context_chunks)
 
+    # Format history for prompt
+    history_text = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in CONVERSATION_HISTORY[session_id][:-1]])
+    
     system_prompt = (
         "You are a helpful assistant for Middle East University (MEU) in Jordan. "
-        "Use the following context to answer the user's question. "
-        "If the answer is not in the context, you MUST answer EXACTLY with the following Arabic text:\n"
+        "Your goal is to answer student questions based on the provided context.\n\n"
+        
+        "IMPORTANT RULES:\n"
+        "1. **Prioritize History for Follow-ups**: If the user asks a follow-up question (e.g., 'How much is it?', 'What are the requirements?') and the previous message was about a specific program/topic, ASSUME they are asking about the SAME topic. Use information from the Conversation History if the current Context is irrelevant.\n"
+        "2. **Disambiguate Program Types**: If the Context contains MULTIPLE programs with similar names but DIFFERENT types (e.g., Diploma vs Bachelor, or Bachelor vs Master), you MUST ask the user to clarify which type they mean. Example: 'هل تقصد دبلوم الإعلام الرقمي أم بكالوريوس الصحافة والإعلام الرقمي؟' (Do you mean the Diploma or Bachelor?). Do NOT assume one type over another.\n"
+        "3. **Ask for Clarification**: If the user's question is vague (e.g., 'fees', 'master', 'location') AND there is NO clear topic in the Conversation History, ask a clarifying question. Example: 'Which program are you asking about?'\n"
+        "4. **Unknown Info**: If the answer is STRICTLY not in the context and you cannot clarify, you MUST answer EXACTLY with the following Arabic text:\n"
         "\"للحصول على المعلومة المطلوبة يمكنك التواصل مع الجامعة من خلال الارقام التالية \n"
         "+962 6 4790222\n"
         "+962 79 712 2000\n"
         "او عبر الواتس اب \n"
         "+962 79 712 2000\"\n"
-        "Be concise and verified.\n\n"
-        f"--- Context ---\n{context_text}\n----------------"
+        "5. **Be Concise**: Keep answers short and relevant.\n\n"
+
+        f"--- Conversation History ---\n{history_text}\n\n"
+        f"--- New User Question ---\n{user_message}\n\n"
+        f"--- Context (Search Results) ---\n{context_text}\n----------------"
     )
 
     try:
@@ -441,6 +495,10 @@ def chat():
             max_tokens=500
         )
         answer = response.choices[0].message.content
+        
+        # Append assistant answer to history
+        CONVERSATION_HISTORY[session_id].append({"role": "assistant", "content": answer})
+        
         return jsonify({"response": answer})
     except Exception as e:
         print(f"OpenAI Error: {e}")
