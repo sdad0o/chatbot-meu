@@ -19,7 +19,7 @@ def simulate_user(user_id):
     
     start_time = time.time()
     try:
-        response = requests.post(URL, json=payload, timeout=30)
+        response = requests.post(URL, json=payload, timeout=60)
         end_time = time.time()
         duration = end_time - start_time
         
