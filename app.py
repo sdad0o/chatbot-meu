@@ -117,7 +117,6 @@ def load_data():
             
             # Pricing
             price_jod = prog.get("credit_hour_price_jod", "N/A")
-            price_usd = prog.get("credit_hour_price_usd", "N/A")
             
             # Faculty
             faculty_ar = prog.get("faculty_ar", "General")
@@ -140,12 +139,17 @@ def load_data():
                 # Join and clean newlines
                 fees_text = " | ".join([f.replace("\n", " ") for f in fees_list])
 
+            # Admission GPA
+            admission_gpa = prog.get("admission_gpa", None)
+            gpa_text = f"{admission_gpa}%" if admission_gpa is not None else "غير محدد"
+
             # Construct chunk
             chunk = (
                 f"Program (تخصص): {name} ({eng_name}). "
                 f"Faculty (الكلية): {faculty_ar} ({faculty_en}). "
                 f"Type: Bachelor (بكالوريوس). "
-                f"Price per credit hour (سعر الساعة): {price_jod} JOD / {price_usd} USD. "
+                f"Admission GPA (معدل القبول): {gpa_text}. "
+                f"Price per credit hour (سعر الساعة): {price_jod} JOD "
                 f"Additional Fees (رسوم إضافية): {fees_text}. "
                 f"Admission Requirements (شروط القبول): {reqs}"
             )
@@ -182,7 +186,6 @@ def load_data():
             
             # Pricing
             price_jod = prog.get("credit_hour_price_jod", "N/A")
-            price_usd = prog.get("credit_hour_price_usd", "N/A")
             
             # Requirements
             reqs = ""
@@ -195,11 +198,16 @@ def load_data():
             if fees_list:
                 fees_text = " | ".join([f.replace("\n", " ") for f in fees_list])
 
+            # Admission GPA
+            admission_gpa = prog.get("admission_gpa", None)
+            gpa_text = f"{admission_gpa}%" if admission_gpa is not None else "غير محدد"
+
             # Construct chunk
             chunk = (
                 f"Program (تخصص): {name} ({eng_name}). "
                 f"Type: Master (ماجستير). "
-                f"Price per credit hour (سعر الساعة): {price_jod} JOD / {price_usd} USD. "
+                f"Admission GPA (معدل القبول): {gpa_text}. "
+                f"Price per credit hour (سعر الساعة): {price_jod} JOD"
                 f"Additional Fees (رسوم إضافية): {fees_text}. "
                 f"Admission Requirements (شروط القبول): {reqs}"
             )
@@ -223,7 +231,6 @@ def load_data():
             diploma_names.append(f"{name} ({eng_name})")
             
             price_jod = prog.get("credit_hour_price_jod", "N/A")
-            price_usd = prog.get("credit_hour_price_usd", "N/A")
             
             reqs = ""
             if "admission_requirements_parsed" in prog:
@@ -235,10 +242,15 @@ def load_data():
             if fees_list:
                 fees_text = " | ".join([f.replace("\n", " ") for f in fees_list])
             
+            # Admission GPA
+            admission_gpa = prog.get("admission_gpa", None)
+            gpa_text = f"{admission_gpa}%" if admission_gpa is not None else "غير محدد"
+
             chunk = (
                 f"Program (تخصص): {name} ({eng_name}). "
                 f"Type: Diploma (دبلوم). "
-                f"Price per credit hour (سعر الساعة): {price_jod} JOD / {price_usd} USD. "
+                f"Admission GPA (معدل القبول): {gpa_text}. "
+                f"Price per credit hour (سعر الساعة): {price_jod} JOD"
                 f"Additional Fees (رسوم إضافية): {fees_text}. "
                 f"Admission Requirements (شروط القبول): {reqs}"
             )
