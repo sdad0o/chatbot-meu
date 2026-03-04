@@ -141,7 +141,39 @@ def load_data():
 
             # Admission GPA
             admission_gpa = prog.get("admission_gpa", None)
-            gpa_text = f"{admission_gpa}%" if admission_gpa is not None else "غير محدد"
+            if isinstance(admission_gpa, dict):
+                j_gpa = admission_gpa.get("jordanian", "غير محدد")
+                nj_gpa = admission_gpa.get("non_jordanian", "غير محدد")
+                gpa_text = f"للأردنيين {j_gpa}% / لغير الأردنيين {nj_gpa}%"
+            elif admission_gpa is not None:
+                gpa_text = f"{admission_gpa}%"
+            else:
+                gpa_text = "غير محدد"
+
+            # Discounts (المنح التشجيعية / الخصومات) - read from JSON
+            discount_text = ""
+            discounts_data = prog.get("discounts", None)
+            if discounts_data and "tiers" in discounts_data:
+                base_price = discounts_data.get("base_credit_hour_price_jod", price_jod)
+                discount_lines = []
+                for tier in discounts_data["tiers"]:
+                    grade = tier.get("grade_range", "")
+                    tier_price = tier.get("credit_hour_price_jod", "")
+                    disc_pct = tier.get("discount_percent", "")
+                    if tier_price == 0:
+                        price_str = "مجاناً"
+                    elif tier_price == "-" or tier_price == "غير متاح":
+                        price_str = "غير متاح"
+                    else:
+                        price_str = f"{tier_price} دينار"
+                    disc_str = f"خصم {disc_pct}%" if disc_pct != "-" and disc_pct != "غير متاح" else "غير متاح"
+                    discount_lines.append(f"معدل {grade}: سعر الساعة {price_str} ({disc_str})")
+                discount_text = (
+                    f"المنح التشجيعية/الخصومات (Discounts) حسب معدل الثانوية العامة "
+                    f"(للطلبة الأردنيين الحاصلين على التوجيهي فقط) - "
+                    f"رسم الساعة الأساسي: {base_price} دينار. "
+                    + " | ".join(discount_lines)
+                )
 
             # Construct chunk
             chunk = (
@@ -149,10 +181,13 @@ def load_data():
                 f"Faculty (الكلية): {faculty_ar} ({faculty_en}). "
                 f"Type: Bachelor (بكالوريوس). "
                 f"Admission GPA (معدل القبول): {gpa_text}. "
-                f"Price per credit hour (سعر الساعة): {price_jod} JOD "
+                f"Price per credit hour (سعر الساعة): {price_jod} JOD. "
                 f"Additional Fees (رسوم إضافية): {fees_text}. "
                 f"Admission Requirements (شروط القبول): {reqs}"
             )
+
+            if discount_text:
+                chunk += f" {discount_text}"
 
             if "required_documents" in prog:
                 chunk += f" Required Documents (الوثائق المطلوبة): {prog['required_documents']}"
@@ -200,7 +235,14 @@ def load_data():
 
             # Admission GPA
             admission_gpa = prog.get("admission_gpa", None)
-            gpa_text = f"{admission_gpa}%" if admission_gpa is not None else "غير محدد"
+            if isinstance(admission_gpa, dict):
+                j_gpa = admission_gpa.get("jordanian", "غير محدد")
+                nj_gpa = admission_gpa.get("non_jordanian", "غير محدد")
+                gpa_text = f"للأردنيين {j_gpa}% / لغير الأردنيين {nj_gpa}%"
+            elif admission_gpa is not None:
+                gpa_text = f"{admission_gpa}%"
+            else:
+                gpa_text = "غير محدد"
 
             # Construct chunk
             chunk = (
@@ -244,7 +286,14 @@ def load_data():
             
             # Admission GPA
             admission_gpa = prog.get("admission_gpa", None)
-            gpa_text = f"{admission_gpa}%" if admission_gpa is not None else "غير محدد"
+            if isinstance(admission_gpa, dict):
+                j_gpa = admission_gpa.get("jordanian", "غير محدد")
+                nj_gpa = admission_gpa.get("non_jordanian", "غير محدد")
+                gpa_text = f"للأردنيين {j_gpa}% / لغير الأردنيين {nj_gpa}%"
+            elif admission_gpa is not None:
+                gpa_text = f"{admission_gpa}%"
+            else:
+                gpa_text = "غير محدد"
 
             chunk = (
                 f"Program (تخصص): {name} ({eng_name}). "
@@ -489,7 +538,12 @@ def chat():
         "+962 79 712 2000\n"
         "او عبر الواتس اب \n"
         "+962 79 712 2000\"\n"
-        "5. **Be Concise**: Keep answers short and relevant.\n\n"
+        "5. **Be Concise**: Keep answers short and relevant.\n"
+        "6. **Mention Discounts**: When a user asks about a specific bachelor program or its price/fees, ALWAYS mention the available discounts (المنح التشجيعية/الخصومات) if they exist in the context. Present them clearly by GPA range. Note that these discounts are for Jordanian Tawjihi students only.\n"
+        "7. **Registration Queries**: If the user asks how to register or asks for registration steps (e.g., 'كيف بقدر اسجل بالجامعه' or 'خطوات التسجيل في الجامعه'), you MUST respond EXACTLY with the following text formatted with an HTML tag:\n"
+        "\"من خلال تعبئة طلب الالتحاق التالي <a href='https://reg.meu.edu.jo/faces/ui/pages/guest/admissionOnline/index.xhtml' target='_blank'>طلب الالتحاق</a> و يمكنك التواصل مع قسم القبول والتسجيل من خلال الرقم +962 79 712 2000.\"\n"
+        "8. **Location Queries**: If the user asks about the university's location or address (e.g., 'وين موقع الجامعة', 'كيف اوصل للجامعة', 'موقع الجامعة'), you MUST respond EXACTLY with the following text and iframe:\n"
+        "\"تقع جامعة الشرق الأوسط في الأردن، عمان، طريق المطار.\n<br>\n<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27122.47095319007!2d35.926835200000006!3d31.816580700000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151b57e0c70620b7%3A0x47a1645e0ee9b4cf!2sMiddle%20East%20University-%20Jordan!5e0!3m2!1sen!2sjo!4v1772618684354!5m2!1sen!2sjo' width='600' height='450' style='border:0;' allowfullscreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>\"\n\n"
 
         f"--- Conversation History ---\n{history_text}\n\n"
         f"--- New User Question ---\n{user_message}\n\n"
