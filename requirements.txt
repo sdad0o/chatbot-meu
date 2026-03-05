@@ -4,3 +4,4 @@ python-dotenv
 wfastcgi
 requests
 gunicorn
+firebase-admin

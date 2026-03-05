@@ -3,6 +3,9 @@ import openai
 import json
 import os
 from dotenv import load_dotenv
+import firebase_admin
+from firebase_admin import credentials, firestore
+from datetime import datetime, timezone
 
 load_dotenv()
 
@@ -14,6 +17,23 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(BASE_DIR, "scrap website data", "meu_data.json")
 CHUNKS = []
 CONVERSATION_HISTORY = {}
+
+# --- Firebase Initialization ---
+FIREBASE_KEY_PATH = os.path.join(BASE_DIR, "firebase-key.json")
+try:
+    if os.path.exists(FIREBASE_KEY_PATH):
+        cred = credentials.Certificate(FIREBASE_KEY_PATH)
+        firebase_admin.initialize_app(cred)
+        # Use Firestore to save logs
+        db = firestore.client()
+        print("Firebase initialized successfully.")
+    else:
+        db = None
+        print(f"Firebase key not found at {FIREBASE_KEY_PATH}. Logging to Firebase is disabled.")
+except Exception as e:
+    db = None
+    print(f"Error initializing Firebase: {e}")
+# -------------------------------
 
 def load_data():
     """Loads JSON and creates text chunks for retrieval."""
@@ -565,6 +585,29 @@ def chat():
         # Append assistant answer to history
         CONVERSATION_HISTORY[session_id].append({"role": "assistant", "content": answer})
         
+        # Save to Firebase if initialized
+        if db is not None:
+            try:
+                # Prepare user info
+                user_info = {
+                    "ip_address": request.remote_addr,
+                    "user_agent": request.headers.get("User-Agent", "Unknown"),
+                    "session_id": session_id
+                }
+                
+                # Chat document
+                chat_data = {
+                    "user_message": user_message,
+                    "bot_response": answer,
+                    "timestamp": datetime.now(timezone.utc),
+                    "user_info": user_info
+                }
+                
+                # Store in a Firestore collection called 'chat_logs'
+                db.collection("chat_logs").add(chat_data)
+            except Exception as fb_err:
+                print(f"Error saving chat to Firebase: {fb_err}")
+
         return jsonify({"response": answer})
     except Exception as e:
         print(f"OpenAI Error: {e}")
