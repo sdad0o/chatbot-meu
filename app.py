@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 import openai
 import json
 import os
+import requests
 from dotenv import load_dotenv
 import firebase_admin
 from firebase_admin import credentials, firestore
@@ -475,6 +476,173 @@ def index():
 def send_static(path):
     return send_from_directory('static', path)
 
+# --- Facebook Messenger Webhook ---
+FB_VERIFY_TOKEN = os.getenv("FB_VERIFY_TOKEN", "my_secure_token_123")
+FB_PAGE_ACCESS_TOKEN = os.getenv("FB_PAGE_ACCESS_TOKEN", "your_page_access_token_here")
+
+@app.route("/webhook", methods=["GET", "POST"])
+def facebook_webhook():
+    if request.method == "GET":
+        mode = request.args.get("hub.mode")
+        token = request.args.get("hub.verify_token")
+        challenge = request.args.get("hub.challenge")
+
+        if mode and token:
+            if mode == "subscribe" and token == FB_VERIFY_TOKEN:
+                print("WEBHOOK_VERIFIED by Facebook!")
+                return challenge, 200
+            else:
+                return "Forbidden", 403
+        return "Not Found", 404
+
+    elif request.method == "POST":
+        data = request.get_json()
+
+        if data and data.get("object") == "page":
+            for entry in data.get("entry", []):
+                for messaging_event in entry.get("messaging", []):
+                    if messaging_event.get("message"):
+                        sender_id = messaging_event["sender"]["id"]
+                        message_text = messaging_event["message"].get("text", "")
+                        
+                        if message_text:
+                            print(f"Received message from Facebook user {sender_id}: {message_text}")
+                            answer = get_chatbot_response(sender_id, message_text)
+                            send_facebook_message(sender_id, answer)
+
+            return "EVENT_RECEIVED", 200
+        else:
+            return "Not Found", 404
+
+import re
+
+def strip_html(text):
+    """Remove HTML tags from text since Facebook Messenger doesn't support HTML."""
+    # Replace <br> and <br/> with newlines
+    text = re.sub(r'<br\s*/?>', '\n', text, flags=re.IGNORECASE)
+    # Replace <a> tags with their text + URL
+    text = re.sub(r"<a[^>]*href=['\"]([^'\"]*)['\"][^>]*>(.*?)</a>", r'\2 \1', text, flags=re.IGNORECASE)
+    # Remove any remaining HTML tags
+    text = re.sub(r'<[^>]+>', '', text)
+    return text.strip()
+
+def get_chatbot_response(sender_id, user_message):
+    """Process a user message through the ChatGPT knowledge base and return the answer."""
+    try:
+        # Manage Conversation History (using sender_id as session)
+        if sender_id not in CONVERSATION_HISTORY:
+            CONVERSATION_HISTORY[sender_id] = []
+        
+        CONVERSATION_HISTORY[sender_id].append({"role": "user", "content": user_message})
+        CONVERSATION_HISTORY[sender_id] = CONVERSATION_HISTORY[sender_id][-6:]
+
+        # Retrieve context
+        context_chunks = retrieve_context(user_message)
+        
+        if not context_chunks:
+            context_text = (
+                "Context: Middle East University (MEU) in Jordan. "
+                "Available Data: President, Board of Trustees, Board of Directors, Council of Deans, "
+                "Master's Admission Procedures, International Programs, and various Bachelor Programs. "
+                "The specific query did not match any keywords in the database."
+            )
+        else:
+            context_text = "\n\n".join(context_chunks)
+
+        history_text = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in CONVERSATION_HISTORY[sender_id][:-1]])
+
+        system_prompt = (
+            "You are a helpful assistant for Middle East University (MEU) in Jordan. "
+            "Your goal is to answer student questions based on the provided context.\n\n"
+            
+            "IMPORTANT RULES:\n"
+            "1. **Prioritize History for Follow-ups**: If the user asks a follow-up question (e.g., 'How much is it?', 'What are the requirements?') and the previous message was about a specific program/topic, ASSUME they are asking about the SAME topic. Use information from the Conversation History if the current Context is irrelevant.\n"
+            "2. **Disambiguate Program Types**: If the Context contains MULTIPLE programs with similar names but DIFFERENT types (e.g., Diploma vs Bachelor, or Bachelor vs Master), you MUST ask the user to clarify which type they mean.\n"
+            "3. **Ask for Clarification**: If the user's question is vague AND there is NO clear topic in the Conversation History, ask a clarifying question.\n"
+            "4. **Unknown Info**: If the answer is STRICTLY not in the context, respond with:\n"
+            "\"للحصول على المعلومة المطلوبة يمكنك التواصل مع الجامعة من خلال الارقام التالية \n"
+            "+962 6 4790222\n"
+            "+962 79 712 2000\n"
+            "او عبر الواتس اب \n"
+            "+962 79 712 2000\"\n"
+            "5. **Be Concise**: Keep answers short and relevant.\n"
+            "6. **Mention Discounts**: When a user asks about a specific bachelor program or its price/fees, ALWAYS mention the available discounts if they exist in the context.\n"
+            "7. **Registration Queries**: If the user asks how to register, respond with:\n"
+            "\"من خلال تعبئة طلب الالتحاق التالي: https://reg.meu.edu.jo/faces/ui/pages/guest/admissionOnline/index.xhtml و يمكنك التواصل مع قسم القبول والتسجيل من خلال الرقم +962 79 712 2000.\"\n"
+            "8. **Location Queries**: If the user asks about the university's location, respond with:\n"
+            "\"تقع جامعة الشرق الأوسط في الأردن، عمان، طريق المطار.\"\n"
+            "9. **No HTML**: Do NOT use any HTML tags in your response. Use plain text only.\n"
+            "10. **Bus Schedule Queries**: If the user asks about the bus schedule (e.g., 'جدول الحركة تبع الباصات'), you MUST respond with: \"يمكنك رؤية جدول الحركة من خلال الرابط التالي https://meubus.meu.edu.jo/\"\n"
+            "11. **Placement Exam Queries**: If the user asks about placement exams (e.g., 'امتحانات المستوى', 'متى امتحانات المستوى'), you MUST respond with: \"يمكنك معرفة موعد امتحانات المستوى من خلال متابعة اعلانات دائرة القبول و التسجيل من خلال الرابط التالي https://www.meu.edu.jo/%D8%A7%D9%84%D9%82%D8%A8%D9%88%D9%84-%D9%88%D8%A7%D9%84%D8%AA%D8%B3%D8%AC%D9%8A%D9%84/?lang=ar\"\n\n"
+
+            f"--- Conversation History ---\n{history_text}\n\n"
+            f"--- New User Question ---\n{user_message}\n\n"
+            f"--- Context (Search Results) ---\n{context_text}\n----------------"
+        )
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ],
+            temperature=0.7,
+            max_tokens=500
+        )
+        answer = response.choices[0].message.content
+        
+        # Strip any HTML just in case
+        answer = strip_html(answer)
+        
+        # Save assistant response to history
+        CONVERSATION_HISTORY[sender_id].append({"role": "assistant", "content": answer})
+        
+        # Save to Firebase
+        if db is not None:
+            try:
+                chat_data = {
+                    "user_message": user_message,
+                    "bot_response": answer,
+                    "timestamp": datetime.now(timezone.utc),
+                    "source": "facebook_messenger",
+                    "user_info": {"sender_id": sender_id, "session_id": sender_id}
+                }
+                db.collection("chat_logs").add(chat_data)
+            except Exception as fb_err:
+                print(f"Error saving FB chat to Firebase: {fb_err}")
+
+        return answer
+    except Exception as e:
+        print(f"Error in get_chatbot_response: {e}")
+        return "عذراً، حدث خطأ أثناء معالجة رسالتك. يرجى المحاولة مرة أخرى."
+
+def send_facebook_message(sender_id, text):
+    """Sends a text message back to the user via Facebook Send API."""
+    # Facebook has a 2000 character limit per message
+    if len(text) > 2000:
+        # Split into multiple messages
+        chunks = [text[i:i+2000] for i in range(0, len(text), 2000)]
+        for chunk in chunks:
+            _send_fb_message(sender_id, chunk)
+    else:
+        _send_fb_message(sender_id, text)
+
+def _send_fb_message(sender_id, text):
+    """Internal: sends a single message via Facebook Send API."""
+    url = f"https://graph.facebook.com/v19.0/me/messages?access_token={FB_PAGE_ACCESS_TOKEN}"
+    payload = {
+        "recipient": {"id": sender_id},
+        "message": {"text": text}
+    }
+    headers = {"Content-Type": "application/json"}
+    try:
+        response = requests.post(url, json=payload, headers=headers)
+        if response.status_code != 200:
+            print(f"Failed to send message to Facebook: {response.text}")
+    except Exception as e:
+        print(f"Error sending to Facebook API: {e}")
+# ----------------------------------
+
 @app.route("/api/chat", methods=["POST"])
 def chat():
     user_message = request.json.get("message", "")
@@ -563,7 +731,11 @@ def chat():
         "7. **Registration Queries**: If the user asks how to register or asks for registration steps (e.g., 'كيف بقدر اسجل بالجامعه' or 'خطوات التسجيل في الجامعه'), you MUST respond EXACTLY with the following text formatted with an HTML tag:\n"
         "\"من خلال تعبئة طلب الالتحاق التالي <a href='https://reg.meu.edu.jo/faces/ui/pages/guest/admissionOnline/index.xhtml' target='_blank'>طلب الالتحاق</a> و يمكنك التواصل مع قسم القبول والتسجيل من خلال الرقم +962 79 712 2000.\"\n"
         "8. **Location Queries**: If the user asks about the university's location or address (e.g., 'وين موقع الجامعة', 'كيف اوصل للجامعة', 'موقع الجامعة'), you MUST respond EXACTLY with the following text and iframe:\n"
-        "\"تقع جامعة الشرق الأوسط في الأردن، عمان، طريق المطار.\n<br>\n<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27122.47095319007!2d35.926835200000006!3d31.816580700000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151b57e0c70620b7%3A0x47a1645e0ee9b4cf!2sMiddle%20East%20University-%20Jordan!5e0!3m2!1sen!2sjo!4v1772618684354!5m2!1sen!2sjo' width='600' height='450' style='border:0;' allowfullscreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>\"\n\n"
+        "\"تقع جامعة الشرق الأوسط في الأردن، عمان، طريق المطار.\n<br>\n<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27122.47095319007!2d35.926835200000006!3d31.816580700000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151b57e0c70620b7%3A0x47a1645e0ee9b4cf!2sMiddle%20East%20University-%20Jordan!5e0!3m2!1sen!2sjo!4v1772618684354!5m2!1sen!2sjo' width='600' height='450' style='border:0;' allowfullscreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>\"\n"
+        "9. **Bus Schedule Queries**: If the user asks about the bus schedule (e.g., 'جدول الحركة تبع الباصات'), you MUST respond EXACTLY with the following text formatted with an HTML tag:\n"
+        "\"يمكنك رؤية جدول الحركة من خلال الرابط التالي <a href='https://meubus.meu.edu.jo/'>جدول النقل</a>\"\n"
+        "10. **Placement Exam Queries**: If the user asks about placement exams (e.g., 'امتحانات المستوى', 'متى امتحانات المستوى'), you MUST respond EXACTLY with the following text formatted with an HTML tag:\n"
+        "\"يمكنك معرفة موعد امتحانات المستو من خلال متابعة اعلانات دائرة القبول و التسجيل من خلال الرابط التالي <a href='https://www.meu.edu.jo/%D8%A7%D9%84%D9%82%D8%A8%D9%88%D9%84-%D9%88%D8%A7%D9%84%D8%AA%D8%B3%D8%AC%D9%8A%D9%84/?lang=ar'>اعلانات دائرة القبول و التسجيل</a>\"\n\n"
 
         f"--- Conversation History ---\n{history_text}\n\n"
         f"--- New User Question ---\n{user_message}\n\n"
