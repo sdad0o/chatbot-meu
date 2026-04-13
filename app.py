@@ -265,15 +265,49 @@ def load_data():
             else:
                 gpa_text = "غير محدد"
 
+            # Discounts (المنح التشجيعية / الخصومات) - read from JSON
+            discount_text = ""
+            discounts_data = prog.get("discounts", None)
+            if discounts_data and "tiers" in discounts_data:
+                base_desc = discounts_data.get("description", "المنح التشجيعية/الخصومات (Discounts)")
+                base_price = discounts_data.get("base_credit_hour_price_jod", price_jod)
+                discount_lines = []
+                for tier in discounts_data["tiers"]:
+                    grade = tier.get("grade_range", "")
+                    tier_price = tier.get("credit_hour_price_jod", "")
+                    disc_pct = tier.get("discount_percent", "")
+                    if tier_price == 0:
+                        price_str = "مجاناً"
+                    elif tier_price == "-" or tier_price == "غير متاح" or tier_price == "":
+                        price_str = "غير متاح"
+                    else:
+                        price_str = f"{tier_price} دينار"
+                    
+                    disc_str = f"خصم {disc_pct}%" if (disc_pct != "-" and disc_pct != "غير متاح" and disc_pct != "") else "غير متاح"
+                    
+                    if grade:
+                        discount_lines.append(f"{grade}: سعر الساعة {price_str} ({disc_str})")
+                    else:
+                        discount_lines.append(f"سعر الساعة بعد الخصم {price_str} ({disc_str})")
+
+                discount_text = (
+                    f"{base_desc} - "
+                    f"رسم الساعة الأساسي: {base_price} دينار. "
+                    + " | ".join(discount_lines)
+                )
+
             # Construct chunk
             chunk = (
                 f"Program (تخصص): {name} ({eng_name}). "
                 f"Type: Master (ماجستير). "
                 f"Admission GPA (معدل القبول): {gpa_text}. "
-                f"Price per credit hour (سعر الساعة): {price_jod} JOD"
+                f"Price per credit hour (سعر الساعة): {price_jod} JOD. "
                 f"Additional Fees (رسوم إضافية): {fees_text}. "
                 f"Admission Requirements (شروط القبول): {reqs}"
             )
+
+            if discount_text:
+                chunk += f" {discount_text}"
 
             if "required_documents" in prog:
                 chunk += f" Required Documents (الوثائق المطلوبة): {prog['required_documents']}"
@@ -316,14 +350,48 @@ def load_data():
             else:
                 gpa_text = "غير محدد"
 
+            # Discounts (المنح التشجيعية / الخصومات) - read from JSON
+            discount_text = ""
+            discounts_data = prog.get("discounts", None)
+            if discounts_data and "tiers" in discounts_data:
+                base_desc = discounts_data.get("description", "المنح التشجيعية/الخصومات (Discounts)")
+                base_price = discounts_data.get("base_credit_hour_price_jod", price_jod)
+                discount_lines = []
+                for tier in discounts_data["tiers"]:
+                    grade = tier.get("grade_range", "")
+                    tier_price = tier.get("credit_hour_price_jod", "")
+                    disc_pct = tier.get("discount_percent", "")
+                    if tier_price == 0:
+                        price_str = "مجاناً"
+                    elif tier_price == "-" or tier_price == "غير متاح" or tier_price == "":
+                        price_str = "غير متاح"
+                    else:
+                        price_str = f"{tier_price} دينار"
+                    
+                    disc_str = f"خصم {disc_pct}%" if (disc_pct != "-" and disc_pct != "غير متاح" and disc_pct != "") else "غير متاح"
+                    
+                    if grade:
+                        discount_lines.append(f"{grade}: سعر الساعة {price_str} ({disc_str})")
+                    else:
+                        discount_lines.append(f"سعر الساعة بعد الخصم {price_str} ({disc_str})")
+
+                discount_text = (
+                    f"{base_desc} - "
+                    f"رسم الساعة الأساسي: {base_price} دينار. "
+                    + " | ".join(discount_lines)
+                )
+
             chunk = (
                 f"Program (تخصص): {name} ({eng_name}). "
                 f"Type: Diploma (دبلوم). "
                 f"Admission GPA (معدل القبول): {gpa_text}. "
-                f"Price per credit hour (سعر الساعة): {price_jod} JOD"
+                f"Price per credit hour (سعر الساعة): {price_jod} JOD. "
                 f"Additional Fees (رسوم إضافية): {fees_text}. "
                 f"Admission Requirements (شروط القبول): {reqs}"
             )
+
+            if discount_text:
+                chunk += f" {discount_text}"
 
             if "required_documents" in prog:
                 chunk += f" Required Documents (الوثائق المطلوبة): {prog['required_documents']}"
@@ -335,7 +403,80 @@ def load_data():
             full_list = ", ".join(diploma_names)
             CHUNKS.append(f"List of all Diploma Programs (تخصصات الدبلوم المتاحة): {full_list}")
 
-    # 8. Specific Contact Questions
+    # 9. Higher Diploma Programs
+    higher_diploma_names = []
+    if "ebooklet" in data and "higher_diploma_programs" in data["ebooklet"]:
+        for prog in data["ebooklet"]["higher_diploma_programs"]:
+            name = prog.get("name_ar", "Unknown Program")
+            eng_name = prog.get("id", "")
+            higher_diploma_names.append(f"{name} ({eng_name})")
+            
+            price_jod = prog.get("credit_hour_price_jod", "N/A")
+            
+            reqs = ""
+            if "admission_requirements_parsed" in prog:
+                reqs = " ".join(prog["admission_requirements_parsed"])
+            
+            # Fees (General)
+            fees_list = prog.get("fees", [])
+            fees_text = ""
+            if fees_list:
+                fees_text = " | ".join([f.replace("\n", " ") for f in fees_list])
+
+            # Discounts (المنح التشجيعية / الخصومات) - read from JSON
+            discount_text = ""
+            discounts_data = prog.get("discounts", None)
+            if discounts_data and "tiers" in discounts_data:
+                base_desc = discounts_data.get("description", "المنح التشجيعية/الخصومات (Discounts)")
+                base_price = discounts_data.get("base_credit_hour_price_jod", price_jod)
+                discount_lines = []
+                for tier in discounts_data["tiers"]:
+                    grade = tier.get("grade_range", "")
+                    tier_price = tier.get("credit_hour_price_jod", "")
+                    disc_pct = tier.get("discount_percent", "")
+                    if tier_price == 0:
+                        price_str = "مجاناً"
+                    elif tier_price == "-" or tier_price == "غير متاح" or tier_price == "":
+                        price_str = "غير متاح"
+                    else:
+                        price_str = f"{tier_price} دينار"
+                    
+                    disc_str = f"خصم {disc_pct}%" if (disc_pct != "-" and disc_pct != "غير متاح" and disc_pct != "") else "غير متاح"
+                    
+                    if grade:
+                        discount_lines.append(f"{grade}: سعر الساعة {price_str} ({disc_str})")
+                    else:
+                        discount_lines.append(f"سعر الساعة بعد الخصم {price_str} ({disc_str})")
+
+                discount_text = (
+                    f"{base_desc} - "
+                    f"رسم الساعة الأساسي: {base_price} دينار. "
+                    + " | ".join(discount_lines)
+                )
+
+            # Construct chunk
+            chunk = (
+                f"Program (تخصص): {name} ({eng_name}). "
+                f"Type: Higher Diploma (الدبلوم العالي). "
+                f"Price per credit hour (سعر الساعة): {price_jod} JOD. "
+                f"Additional Fees (رسوم إضافية): {fees_text}. "
+                f"Admission Requirements (شروط القبول): {reqs}"
+            )
+
+            if discount_text:
+                chunk += f" {discount_text}"
+
+            if "required_documents" in prog:
+                chunk += f" Required Documents (الوثائق المطلوبة): {prog['required_documents']}"
+            
+            CHUNKS.append(chunk)
+
+        # Add Higher Diploma Summary Chunk
+        if higher_diploma_names:
+            full_list = ", ".join(higher_diploma_names)
+            CHUNKS.append(f"List of all Higher Diploma Programs (تخصصات الدبلوم العالي المتاحة): {full_list}")
+
+    # 10. Specific Contact Questions
     # Admission and Registration
     CHUNKS.append("Question: كيف يمكنني التواصل مع القبول و التسجيل؟ Answer: يمكنك التواصل مع القبول و التسجيل من خلال الرقم +962 79 712 2000")
     
@@ -385,6 +526,40 @@ def load_data():
     # 9. Developer Info (Hardcoded)
     dev_info = "تم تطويري من قبل دائرة تكنولوجيا المعلومات في جامعة الشرق الاوسط. I was developed by the IT Department at Middle East University."
     CHUNKS.append(f"Question: Who made you? Who developed you? من صنعك؟ Answer: {dev_info}")
+
+    # Home Economics Admission
+    home_economics_answer = (
+        "التخصصات التي يقبل فيها فرع الاقتصاد المنزلي هي:\n"
+        "- تصميم جرافيكي\n"
+        "- تصميم داخلي\n"
+        "- ادارة وتدريب رياضي\n"
+        "- تكنولوجيا التعليم"
+    )
+    CHUNKS.append(f"Question: ما التخصصات التي يقبل فيها الفرع الاقتصاد المنزلي ؟ Answer: {home_economics_answer}")
+
+    # Housing
+    CHUNKS.append("Question: هل يتوفر سكن في جامعة الشرق الاوسط؟ هل يوجد سكن؟ Answer: لا يتوفر سكن في جامعة الشرق الاوسط")
+
+    # University of Bedfordshire Phone Number
+    CHUNKS.append("Question: رقم جامعة بيدفورشير؟ تواصل مع بيدفورشير؟ Answer: يمكنك التواصل مع جامعة بيدفورشير من خلال الرقم 0798002254")
+
+    # Admission and Registration Emails
+    admission_emails_answer = (
+        "يمكنك التواصل مع دائرة القبول والتسجيل من خلال الإيميلات التالية:\n"
+        "- Dir-Admission@meu.edu.jo\n"
+        "- Sec-REG@meu.edu.jo\n"
+        "- fodeh@meu.edu.jo"
+    )
+    CHUNKS.append(f"Question: هل يمكنك تزويدي بايميل القبول و التسجيل؟ ما هو ايميل القبول والتسجيل؟ Answer: {admission_emails_answer}")
+
+    # International Student Affairs
+    international_affairs_answer = (
+        "يمكنك التواصل مع شؤون الطلبة الوافدين من خلال الإيميلات التالية:\n"
+        "- DeanStudent.Affairs@meu.edu.jo\n"
+        "- Sec-Student.Affairs@meu.edu.jo\n"
+        "- w.arabiat@meu.edu.jo"
+    )
+    CHUNKS.append(f"Question: كيف يمكنني التواصل مع شؤون الطلبة الوافدين؟ Answer: {international_affairs_answer}")
 
     print(f"Data loaded. {len(CHUNKS)} chunks created.")
 

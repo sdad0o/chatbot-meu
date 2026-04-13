@@ -42,7 +42,12 @@
           "base_credit_hour_price_jod": 80,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
+            },
+            {
+              "grade_range": "85% - 97.9%",
               "credit_hour_price_jod": 40,
               "discount_percent": 50
             },
@@ -52,14 +57,9 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "85% - 97.9%",
+              "grade_range": "أقل من 80%",
               "credit_hour_price_jod": 40,
               "discount_percent": 50
-            },
-            {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
             }
           ]
         }
@@ -90,14 +90,9 @@
           "base_credit_hour_price_jod": 50,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 32.5,
-              "discount_percent": 35
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 30,
-              "discount_percent": 40
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -105,9 +100,14 @@
               "discount_percent": 45
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 30,
+              "discount_percent": 40
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 32.5,
+              "discount_percent": 35
             }
           ]
         }
@@ -138,14 +138,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 54,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 49.5,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -153,9 +148,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 49.5,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 54,
+              "discount_percent": 40
             }
           ]
         }
@@ -186,7 +186,12 @@
           "base_credit_hour_price_jod": 70,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
+            },
+            {
+              "grade_range": "85% - 97.9%",
               "credit_hour_price_jod": 35,
               "discount_percent": 50
             },
@@ -196,14 +201,9 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "85% - 97.9%",
+              "grade_range": "أقل من 80%",
               "credit_hour_price_jod": 35,
               "discount_percent": 50
-            },
-            {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
             }
           ]
         }
@@ -234,14 +234,9 @@
           "base_credit_hour_price_jod": 70,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 42,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 38.5,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -249,9 +244,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 38.5,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 42,
+              "discount_percent": 40
             }
           ]
         }
@@ -282,14 +282,9 @@
           "base_credit_hour_price_jod": 65,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 39,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 35.75,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -297,9 +292,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 35.75,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 39,
+              "discount_percent": 40
             }
           ]
         }
@@ -330,14 +330,9 @@
           "base_credit_hour_price_jod": 80,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 48,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 44,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -345,9 +340,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 44,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 48,
+              "discount_percent": 40
             }
           ]
         }
@@ -378,7 +378,12 @@
           "base_credit_hour_price_jod": 85,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
+            },
+            {
+              "grade_range": "85% - 97.9%",
               "credit_hour_price_jod": 42.5,
               "discount_percent": 50
             },
@@ -388,14 +393,9 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "85% - 97.9%",
+              "grade_range": "أقل من 80%",
               "credit_hour_price_jod": 42.5,
               "discount_percent": 50
-            },
-            {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
             }
           ]
         }
@@ -426,14 +426,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 63,
-              "discount_percent": 30
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 54,
-              "discount_percent": 40
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -441,9 +436,14 @@
               "discount_percent": 40
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 54,
+              "discount_percent": 40
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 63,
+              "discount_percent": 30
             }
           ]
         }
@@ -474,14 +474,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 58.5,
-              "discount_percent": 35
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 54,
-              "discount_percent": 40
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -489,9 +484,14 @@
               "discount_percent": 40
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 54,
+              "discount_percent": 40
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 58.5,
+              "discount_percent": 35
             }
           ]
         }
@@ -522,14 +522,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 54,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 49.5,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -537,9 +532,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 49.5,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 54,
+              "discount_percent": 40
             }
           ]
         }
@@ -570,14 +570,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 58.5,
-              "discount_percent": 35
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 54,
-              "discount_percent": 40
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -585,9 +580,14 @@
               "discount_percent": 45
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 54,
+              "discount_percent": 40
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 58.5,
+              "discount_percent": 35
             }
           ]
         }
@@ -618,14 +618,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 54,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 49.5,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -633,9 +628,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 49.5,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 54,
+              "discount_percent": 40
             }
           ]
         }
@@ -666,14 +666,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 63,
-              "discount_percent": 30
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 58.5,
-              "discount_percent": 35
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -681,9 +676,14 @@
               "discount_percent": 40
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 58.5,
+              "discount_percent": 35
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 63,
+              "discount_percent": 30
             }
           ]
         }
@@ -714,7 +714,12 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
+            },
+            {
+              "grade_range": "85% - 97.9%",
               "credit_hour_price_jod": 45,
               "discount_percent": 50
             },
@@ -724,14 +729,9 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "85% - 97.9%",
+              "grade_range": "أقل من 80%",
               "credit_hour_price_jod": 45,
               "discount_percent": 50
-            },
-            {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
             }
           ]
         }
@@ -762,14 +762,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 63,
-              "discount_percent": 30
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 58.5,
-              "discount_percent": 35
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -777,9 +772,14 @@
               "discount_percent": 40
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 58.5,
+              "discount_percent": 35
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 63,
+              "discount_percent": 30
             }
           ]
         }
@@ -810,14 +810,9 @@
           "base_credit_hour_price_jod": 100,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 70,
-              "discount_percent": 30
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 65,
-              "discount_percent": 35
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -825,9 +820,14 @@
               "discount_percent": 40
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 65,
+              "discount_percent": 35
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 70,
+              "discount_percent": 30
             }
           ]
         }
@@ -858,14 +858,9 @@
           "base_credit_hour_price_jod": 100,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 70,
-              "discount_percent": 30
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 65,
-              "discount_percent": 35
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -873,9 +868,14 @@
               "discount_percent": 40
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 65,
+              "discount_percent": 35
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 70,
+              "discount_percent": 30
             }
           ]
         }
@@ -906,14 +906,9 @@
           "base_credit_hour_price_jod": 100,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 70,
-              "discount_percent": 30
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 65,
-              "discount_percent": 35
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -921,9 +916,14 @@
               "discount_percent": 40
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 65,
+              "discount_percent": 35
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 70,
+              "discount_percent": 30
             }
           ]
         }
@@ -954,14 +954,9 @@
           "base_credit_hour_price_jod": 80,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 48,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 44,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -969,9 +964,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 44,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 48,
+              "discount_percent": 40
             }
           ]
         }
@@ -1002,14 +1002,9 @@
           "base_credit_hour_price_jod": 70,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 42,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 38.5,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1017,9 +1012,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 38.5,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 42,
+              "discount_percent": 40
             }
           ]
         }
@@ -1050,14 +1050,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": "-",
-              "discount_percent": "-"
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 45,
-              "discount_percent": 50
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1065,9 +1060,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 45,
+              "discount_percent": 50
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": "-",
+              "discount_percent": "-"
             }
           ]
         }
@@ -1098,14 +1098,9 @@
           "base_credit_hour_price_jod": 110,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": "-",
-              "discount_percent": "-"
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 55,
-              "discount_percent": 50
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1113,9 +1108,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 55,
+              "discount_percent": 50
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": "-",
+              "discount_percent": "-"
             }
           ]
         }
@@ -1146,14 +1146,9 @@
           "base_credit_hour_price_jod": 110,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": "-",
-              "discount_percent": "-"
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 55,
-              "discount_percent": 50
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1161,9 +1156,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 55,
+              "discount_percent": 50
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": "-",
+              "discount_percent": "-"
             }
           ]
         }
@@ -1194,14 +1194,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 54,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 49.5,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1209,9 +1204,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 49.5,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 54,
+              "discount_percent": 40
             }
           ]
         }
@@ -1242,14 +1242,9 @@
           "base_credit_hour_price_jod": 100,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 65,
-              "discount_percent": 35
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 60,
-              "discount_percent": 40
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1257,9 +1252,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 60,
+              "discount_percent": 40
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 65,
+              "discount_percent": 35
             }
           ]
         }
@@ -1290,14 +1290,9 @@
           "base_credit_hour_price_jod": 110,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": "-",
-              "discount_percent": "-"
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 55,
-              "discount_percent": 50
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1305,9 +1300,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 55,
+              "discount_percent": 50
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": "-",
+              "discount_percent": "-"
             }
           ]
         }
@@ -1338,14 +1338,9 @@
           "base_credit_hour_price_jod": 130,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": "-",
-              "discount_percent": "-"
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 78,
-              "discount_percent": 40
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1353,9 +1348,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 78,
+              "discount_percent": 40
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": "-",
+              "discount_percent": "-"
             }
           ]
         }
@@ -1386,7 +1386,12 @@
           "base_credit_hour_price_jod": 100,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
+            },
+            {
+              "grade_range": "85% - 97.9%",
               "credit_hour_price_jod": 50,
               "discount_percent": 50
             },
@@ -1396,14 +1401,9 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "85% - 97.9%",
+              "grade_range": "أقل من 80%",
               "credit_hour_price_jod": 50,
               "discount_percent": 50
-            },
-            {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
             }
           ]
         }
@@ -1434,14 +1434,9 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 63,
-              "discount_percent": 30
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 58.5,
-              "discount_percent": 35
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1449,9 +1444,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 58.5,
+              "discount_percent": 35
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 63,
+              "discount_percent": 30
             }
           ]
         }
@@ -1482,7 +1482,12 @@
           "base_credit_hour_price_jod": 100,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
+            },
+            {
+              "grade_range": "85% - 97.9%",
               "credit_hour_price_jod": 50,
               "discount_percent": 50
             },
@@ -1492,14 +1497,9 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "85% - 97.9%",
+              "grade_range": "أقل من 80%",
               "credit_hour_price_jod": 50,
               "discount_percent": 50
-            },
-            {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
             }
           ]
         }
@@ -1530,14 +1530,9 @@
           "base_credit_hour_price_jod": 100,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
-              "credit_hour_price_jod": 60,
-              "discount_percent": 40
-            },
-            {
-              "grade_range": "80% - 84.9%",
-              "credit_hour_price_jod": 50,
-              "discount_percent": 45
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
             },
             {
               "grade_range": "85% - 97.9%",
@@ -1545,9 +1540,14 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
+              "grade_range": "80% - 84.9%",
+              "credit_hour_price_jod": 50,
+              "discount_percent": 45
+            },
+            {
+              "grade_range": "أقل من 80%",
+              "credit_hour_price_jod": 60,
+              "discount_percent": 40
             }
           ]
         }
@@ -1578,7 +1578,12 @@
           "base_credit_hour_price_jod": 80,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
+            },
+            {
+              "grade_range": "85% - 97.9%",
               "credit_hour_price_jod": 40,
               "discount_percent": 50
             },
@@ -1588,14 +1593,9 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "85% - 97.9%",
+              "grade_range": "أقل من 80%",
               "credit_hour_price_jod": 40,
               "discount_percent": 50
-            },
-            {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
             }
           ]
         }
@@ -1626,7 +1626,12 @@
           "base_credit_hour_price_jod": 100,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
+            },
+            {
+              "grade_range": "85% - 97.9%",
               "credit_hour_price_jod": 50,
               "discount_percent": 50
             },
@@ -1636,14 +1641,9 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "85% - 97.9%",
+              "grade_range": "أقل من 80%",
               "credit_hour_price_jod": 50,
               "discount_percent": 50
-            },
-            {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
             }
           ]
         }
@@ -1674,7 +1674,12 @@
           "base_credit_hour_price_jod": 90,
           "tiers": [
             {
-              "grade_range": "أقل من 80%",
+              "grade_range": "98% فما فوق",
+              "credit_hour_price_jod": 0,
+              "discount_percent": 100
+            },
+            {
+              "grade_range": "85% - 97.9%",
               "credit_hour_price_jod": 45,
               "discount_percent": 50
             },
@@ -1684,14 +1689,9 @@
               "discount_percent": 50
             },
             {
-              "grade_range": "85% - 97.9%",
+              "grade_range": "أقل من 80%",
               "credit_hour_price_jod": 45,
               "discount_percent": 50
-            },
-            {
-              "grade_range": "98% فما فوق",
-              "credit_hour_price_jod": 0,
-              "discount_percent": 100
             }
           ]
         }
@@ -1723,17 +1723,7 @@
           "يجوز للطالب الوافد الحاصل على دبلوم عالي بتقدير لا يقل عن جيد جداً الالتحاق بالبرنامج بغض النظر عن تقدير البكالوريوس.",
           "لا يسمح لطلبة الدبلوم المهني أو الفني الالتحاق ببرامج الدراسات العليا.",
           "لا يجوز احتساب مواد من برنامج الدبلوم العالي عند التحاق الطالب في برنامج الماجستير."
-        ],
-        "discounts": {
-          "description": "المنح التشجيعية (الخصومات) حسب التقدير في البكالوريوس",
-          "base_credit_hour_price_jod": 140,
-          "tiers": [
-            {
-              "credit_hour_price_jod": 98,
-              "discount_percent": 30
-            }
-          ]
-        }
+        ]
       },
       {
         "id": "law-public",
@@ -1760,17 +1750,7 @@
           "يجوز للطالب الوافد الحاصل على دبلوم عالي بتقدير لا يقل عن جيد جداً الالتحاق بالبرنامج بغض النظر عن تقدير البكالوريوس.",
           "لا يسمح لطلبة الدبلوم المهني أو الفني الالتحاق ببرامج الدراسات العليا.",
           "لا يجوز احتساب مواد من برنامج الدبلوم العالي عند التحاق الطالب في برنامج الماجستير."
-        ],
-        "discounts": {
-          "description": "المنح التشجيعية (الخصومات) حسب التقدير في البكالوريوس",
-          "base_credit_hour_price_jod": 140,
-          "tiers": [
-            {
-              "credit_hour_price_jod": 98,
-              "discount_percent": 30
-            }
-          ]
-        }
+        ]
       },
       {
         "id": "mba",
@@ -1797,17 +1777,7 @@
           "يجوز للطالب الوافد الحاصل على دبلوم عالي بتقدير لا يقل عن جيد جداً الالتحاق بالبرنامج بغض النظر عن تقدير البكالوريوس.",
           "لا يسمح لطلبة الدبلوم المهني أو الفني الالتحاق ببرامج الدراسات العليا.",
           "لا يجوز احتساب مواد من برنامج الدبلوم العالي عند التحاق الطالب في برنامج الماجستير."
-        ],
-        "discounts": {
-          "description": "المنح التشجيعية (الخصومات) حسب التقدير في البكالوريوس",
-          "base_credit_hour_price_jod": 200,
-          "tiers": [
-            {
-              "credit_hour_price_jod": 140,
-              "discount_percent": 30
-            }
-          ]
-        }
+        ]
       },
       {
         "id": "master-accounting",
@@ -1834,17 +1804,7 @@
           "يجوز للطالب الوافد الحاصل على دبلوم عالي بتقدير لا يقل عن جيد جداً الالتحاق بالبرنامج بغض النظر عن تقدير البكالوريوس.",
           "لا يسمح لطلبة الدبلوم المهني أو الفني الالتحاق ببرامج الدراسات العليا.",
           "لا يجوز احتساب مواد من برنامج الدبلوم العالي عند التحاق الطالب في برنامج الماجستير."
-        ],
-        "discounts": {
-          "description": "المنح التشجيعية (الخصومات) حسب التقدير في البكالوريوس",
-          "base_credit_hour_price_jod": 150,
-          "tiers": [
-            {
-              "credit_hour_price_jod": 90,
-              "discount_percent": 40
-            }
-          ]
-        }
+        ]
       },
       {
         "id": "master-media",
@@ -1871,17 +1831,7 @@
           "يجوز للطالب الوافد الحاصل على دبلوم عالي بتقدير لا يقل عن جيد جداً الالتحاق بالبرنامج بغض النظر عن تقدير البكالوريوس.",
           "لا يسمح لطلبة الدبلوم المهني أو الفني الالتحاق ببرامج الدراسات العليا.",
           "لا يجوز احتساب مواد من برنامج الدبلوم العالي عند التحاق الطالب في برنامج الماجستير."
-        ],
-        "discounts": {
-          "description": "المنح التشجيعية (الخصومات) حسب التقدير في البكالوريوس",
-          "base_credit_hour_price_jod": 180,
-          "tiers": [
-            {
-              "credit_hour_price_jod": 126,
-              "discount_percent": 30
-            }
-          ]
-        }
+        ]
       },
       {
         "id": "master-pharmacy",
@@ -1908,17 +1858,7 @@
           "يجوز للطالب الوافد الحاصل على دبلوم عالي بتقدير لا يقل عن جيد جداً الالتحاق بالبرنامج بغض النظر عن تقدير البكالوريوس.",
           "لا يسمح لطلبة الدبلوم المهني أو الفني الالتحاق ببرامج الدراسات العليا.",
           "لا يجوز احتساب مواد من برنامج الدبلوم العالي عند التحاق الطالب في برنامج الماجستير."
-        ],
-        "discounts": {
-          "description": "المنح التشجيعية (الخصومات) حسب التقدير في البكالوريوس",
-          "base_credit_hour_price_jod": 180,
-          "tiers": [
-            {
-              "credit_hour_price_jod": 153,
-              "discount_percent": 15
-            }
-          ]
-        }
+        ]
       }
     ],
     "diploma_programs": [
@@ -2117,17 +2057,7 @@
           "رسم تأمينات مستردة (مرة واحدة)\n75 دينار",
           "رسوم التسجيل الفصلية\n500 دينار",
           "رسوم خدمات فصلية للطلبة غير الأردنيين\n30 دينار"
-        ],
-        "discounts": {
-          "description": "المنح التشجيعية (الخصومات) حسب التقدير في البكالوريوس",
-          "base_credit_hour_price_jod": 100,
-          "tiers": [
-            {
-              "credit_hour_price_jod": 50,
-              "discount_percent": 50
-            }
-          ]
-        }
+        ]
       }
     ],
     "faculties": [],
