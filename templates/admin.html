@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEU ChatBot - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0b2e59;
+            --secondary-color: #f1b434;
+            --bg-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+
+        .logout-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Table Card */
+        .card {
+            background-color: var(--surface-color);
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8fafc;
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            vertical-align: top;
+        }
+
+        tbody tr {
+            transition: background-color 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Message Bubbles */
+        .message-cell {
+            max-width: 350px;
+        }
+
+        .message-box {
+            background-color: #f1f5f9;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .bot-response-box {
+            background-color: #eff6ff;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .user-message-box {
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timestamp {
+            white-space: nowrap;
+            color: var(--text-secondary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .source-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background-color: #e2e8f0;
+            color: #475569;
+            text-transform: capitalize;
+        }
+
+        .source-facebook_messenger {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .user-info {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+            word-break: break-all;
+        }
+
+        /* Empty State */
+        .empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">MEU ChatBot Admin</div>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Sign Out</a>
+    </nav>
+
+    <main class="container">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Interaction Logs</h1>
+                <p class="page-subtitle">Showing the most recent queries and responses</p>
+            </div>
+        </div>
+
+        <div class="card">
+            {% if logs and logs|length > 0 %}
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Source & User</th>
+                            <th>User Question</th>
+                            <th>Bot Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs %}
+                        <tr>
+                            <td class="timestamp">
+                                {% if log.timestamp %}
+                                    {{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') if log.timestamp.strftime else log.timestamp }}
+                                {% else %}
+                                    Unknown
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% set source_class = 'source-' + log.get('source', 'web') %}
+                                <span class="source-badge {{ source_class }}">
+                                    {{ log.get('source', 'Web Chat') }}
+                                </span>
+                                <div class="user-info">
+                                    {% if log.user_info %}
+                                        ID: {{ log.user_info.get('session_id', 'N/A')[:15] }}...
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="message-cell">
+                                <div class="message-box user-message-box" dir="auto">
+                                    {{ log.user_message }}
+                                </div>
+                            </td>
+                            <td class="message-cell">
+                                <div class="message-box bot-response-box" dir="auto">
+                                    {{ log.bot_response }}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h3>No logs found</h3>
+                <p>There are currently no interactions recorded in the database.</p>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+</body>
+</html>

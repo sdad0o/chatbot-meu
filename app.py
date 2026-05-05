@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template, session, redirect, url_for
 import openai
 import json
 import os
@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", "super_secret_admin_key_12345")
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Use absolute path based on script location for IIS compatibility
@@ -646,6 +647,42 @@ client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 @app.route("/")
 def index():
     return send_from_directory('templates', 'index.html')
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if username == "admin" and password == "Meu@admin159":
+            session["logged_in"] = True
+            return redirect(url_for("admin"))
+        else:
+            error = "Invalid Credentials. Please try again."
+            return render_template("login.html", error=error)
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.pop("logged_in", None)
+    return redirect(url_for("login"))
+
+@app.route("/admin")
+def admin():
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+    
+    logs = []
+    if db is not None:
+        try:
+            # Fetch latest 100 logs to prevent overload
+            docs = db.collection("chat_logs").order_by("timestamp", direction=firestore.Query.DESCENDING).limit(100).get()
+            for doc in docs:
+                log_data = doc.to_dict()
+                logs.append(log_data)
+        except Exception as e:
+            print(f"Error fetching logs from Firebase: {e}")
+            
+    return render_template("admin.html", logs=logs)
 
 @app.route("/static/<path:path>")
 def send_static(path):
